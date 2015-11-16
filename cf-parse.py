@@ -204,7 +204,7 @@ for p in p_cursor:
         data = parse_detail(BeautifulSoup(p['detail_raw'], "lxml"))
         w = write_results(p['url'], data)
 	p['name'] = p['name'].strip()
-        print "(%s) from %s processed for %i fields, mod %i" % ("http://www.cofounderslab.com"+p['url'], p['loc'], len(data), w.modified_count)
+        print "(%s) processed for %i fields, mod %i" % ("http://www.cofounderslab.com"+p['url'], len(data), w.modified_count)
         #mini sanity check
         if len(data) == 0: print "ERROR, retrieved 0 fields"
         del p['detail_raw']
