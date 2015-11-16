@@ -1,10 +1,10 @@
 # py-cf-crawl
-Fully structured retrieval of cofounderslab.com profiles in Python (mongoDB, BeautifulSoup and Scrapy).
+Fully structured retrieval of https://cofounderslab.com profiles in Python (mongoDB, BeautifulSoup and Scrapy).
 Because data is represented differently for each profile type, searching, scraping and parsing are separated from each other. This allows to make adaptations to the final data without throwing away retrieved pages.
 ##Crawling Profile Summaries
 ###Usage
 *python cf-crawl.py* <br>
-Make sure your mongoDB instance is accessible (port and address hardcoded). You can interrupt the process any time without loosing data. <br>
+Make sure your mongoDB instance is accessible (port and URL hardcoded). You can interrupt the process any time without loosing data. <br>
 Timestamped in "summary_retrieved".
 ###Tricks
 Unrestricted search queries are limited to 250 pages. Thus, queries need to be mimicked by http post request to the API endpoint at /Index/postfilter and maintained in the session cache. A sequence of different filters yields a full set of profiles. These queries were obtained by intercepting post requests from a manual search and are specified in the global variable "filters".
@@ -18,6 +18,6 @@ Unlike the sequential requests from the initial search queries, fetching the det
 ##cf-parse.py
 ##Usage
 *python cf-parse.py outname*
-Outputs both a outname.csv and outname.xls file.
+Updateds database and outputs both a outname.csv and outname.xls file. All field names are defined in parse_detail(soup).
 ##Tricks
-Since many html branches exist only in certain types of profiles, a custom class DictData handles sparse data entry from BeautifulSoup objects gracefully with common postprocessing (stripping, flattening arrays, preprocess hooks). Thus, parsing all various fields is compact with less error handling.
+Since many html branches exist only in certain types of profiles, a custom class DictData handles sparse data entry from BeautifulSoup objects gracefully with common postprocessing (stripping, flattening arrays, preprocess hooks). Thus, parsing a combined set of fields is compact.
