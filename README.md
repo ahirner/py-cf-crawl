@@ -17,7 +17,7 @@ Timestamped in "detail_retrieved".
 Unlike the sequential requests from the initial search queries, fetching the detailed data is parallized through scrapy.
 ##cf-parse.py
 ##Usage
-*python cf-parse.py outname*
+*python cf-parse.py outname* <br>
 Updateds database and outputs both a outname.csv and outname.xls file. All field names are defined in parse_detail(soup).
 ##Tricks
 Since many html branches exist only in certain types of profiles, a custom class DictData handles sparse data entry from BeautifulSoup objects gracefully with common postprocessing (stripping, flattening arrays, preprocess hooks). Thus, parsing a combined set of fields is compact.
