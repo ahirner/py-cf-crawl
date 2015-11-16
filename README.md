@@ -15,7 +15,7 @@ Fetches each profile url, updates them in case a user chose another profession a
 Timestamped in "detail_retrieved".
 ###Tricks
 Unlike the sequential requests from the initial search queries, fetching the detailed data is parallized through scrapy.
-##cf-parse.py
+##Parsing and Output
 ##Usage
 *python cf-parse.py outname* <br>
 Updateds database and outputs both a outname.csv and outname.xls file. All field names are defined in parse_detail(soup).
