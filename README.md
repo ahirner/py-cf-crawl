@@ -10,7 +10,7 @@ Timestamped in "summary_retrieved".
 Unrestricted search queries are limited to 250 pages. Thus, queries need to be mimicked by http post request to the API endpoint at /Index/postfilter and maintained in the session cache. A sequence of different filters yields a full set of profiles. These queries were obtained by intercepting post requests from a manual search and are specified in the global variable "filters".
 ##Crawling Profile Details
 ###Usage
-python cf-detail-crawl.py\n
+python cf-detail-crawl.py <br>
 Fetches each profile url, updates them in case a user chose another profession and stores the raw html into "detail_raw" document. Specify MISSING_ONLY= True if you only want to crawl not yet retrieved profile pages.
 Timestamped in "detail_retrieved".
 ###Tricks
