@@ -8,7 +8,7 @@ Make sure your mongoDB instance is accessible (port and URL hardcoded). You can 
 Timestamped in "summary_retrieved".
 ####Tricks
 Unrestricted search queries are limited to 250 pages. Thus, queries need to be mimicked by http post request to the API endpoint at /Index/postfilter and maintained in the session cache. A sequence of different filters yields a full set of profiles. These queries were obtained by intercepting post requests from a manual search and are specified in the global variable "filters". <br>
-!["capturing filter requests as json items"](./master/screeens/http_post_request_capture.png?raw=true "capturing filter requests as json items")
+!["capturing filter requests as json items"](./screens/http_post_request_capture.png?raw=true "capturing filter requests as json items")
 ##Crawling Profile Details
 ####Usage
 *python cf-detail-crawl.py* <br>
