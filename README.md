@@ -3,11 +3,12 @@ Fully structured retrieval of https://cofounderslab.com profiles in Python (mong
 Because data is represented differently for each profile type, searching, scraping and parsing are separated from each other. This allows to make adaptations to the final data without throwing away retrieved pages.
 ##Crawling Profile Summaries
 ####Usage
-*python cf-crawl.py* <br>
+`python cf-crawl.py` <br>
 Make sure your mongoDB instance is accessible (port and URL hardcoded). You can interrupt the process any time without loosing data. <br>
 Timestamped in "summary_retrieved".
 ####Tricks
-Unrestricted search queries are limited to 250 pages. Thus, queries need to be mimicked by http post request to the API endpoint at /Index/postfilter and maintained in the session cache. A sequence of different filters yields a full set of profiles. These queries were obtained by intercepting post requests from a manual search and are specified in the global variable "filters".
+Unrestricted search queries are limited to 250 pages. Thus, queries need to be mimicked by http post request to the API endpoint at /Index/postfilter and maintained in the session cache. A sequence of different filters yields a full set of profiles. These queries were obtained by intercepting post requests from a manual search and are specified in the global variable "filters". <br>
+!["capturing filter requests as json items"](./master/screeens/http_post_request_capture.png?raw=true "capturing filter requests as json items")
 ##Crawling Profile Details
 ####Usage
 *python cf-detail-crawl.py* <br>
