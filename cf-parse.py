@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from bs4 import BeautifulSoup, element
 import pandas as pd
 
-MONGOPORT = 27017 #3001
+MONGOPORT = 3001 #27017 #3001
 OUT = "out"
 if len(sys.argv) > 1: OUT = sys.argv[1]
 
@@ -38,10 +38,11 @@ class DictData(dict):
 def parse_detail(soup):
     data = DictData()
     sec = soup.find("div", class_ = ["basic_dtl", "founder_head"])
-    #print type(sec.find("span", class_ = "cir_today_txt_new"))
-    #print sec.find("span", class_ = "cir_today_txt_new").get_text()
 
     if sec is not None:
+        for f in sec.findAll("h5"):
+            spans = f.findAll("span")           
+            if len(spans) == 3: data.insert({spans[0].get_text(strip=True) : spans[2]})
         data.insert({'fav': sec.find("span", class_ = "cir_innertext_new")})
 
         resp = sec.find("div", class_ = "r2_new")
@@ -160,7 +161,7 @@ def parse_detail(soup):
 
     sec = soup.find("div", class_ = "section_box social1")
     if sec is not None:
-        s_classes = ['linkedin', 'facebook', 'twitter']
+        s_classes = ['linkedin', 'facebook', 'twitter', 'meetup']
         s_trues = [False] * len(s_classes)
         for sp in sec.findAll("a", class_="social_profiles"):
             t = sp.find("h4").get_text(strip=True).lower()
