@@ -51,7 +51,7 @@ for es in essential:
          
     
 nsheets = sheet_column(len(fields))[0] + 1
-print "Total fields: %i, separated into %i sheets" %(len(fields), nsheets)
+print "Total fields: %i, separated into %i sheets | SKIP %i & MAX %i" %(len(fields), nsheets, SKIP, MAX)
 
 wb = xlwt.Workbook()
 bold = xlwt.easyxf('font: bold 1')
@@ -76,7 +76,6 @@ for p in p_cursor:
                 ind = fields.index(k)
                 s, c = sheet_column(ind)
                 sheets[s].write(i+1, c, v)
-        i += 1
 	if (i % 100 == 1):
 		print "%i rows written" %i
 	if (i % 2500 == 1): 
@@ -84,9 +83,13 @@ for p in p_cursor:
 		print "saved at row %i" %i
     if i >= MAX:
         break
+    
+    i += 1        
+    
     except KeyboardInterrupt:
         print "Interrupted .. last url: " + "http://www.cofounderslab.com"+p['url']
         break
 
+print "total processed rows: %i" %i
 wb.save(OUT+".xls")
 
