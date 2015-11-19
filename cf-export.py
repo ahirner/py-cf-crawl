@@ -9,7 +9,13 @@ import xlwt
 
 MONGOPORT = 27017 #3001
 OUT = "out"
-if len(sys.argv) > 1: OUT = sys.argv[1]
+SKIP = 0
+MAX = None
+
+larg = len(sys.argv)
+if larg > 1: OUT = sys.argv[1]
+elif larg > 2: SKIP = int(sys.argv[2])
+elif larg > 3: MAX = int(sys.argv[3])
 
 
 # In[39]:
@@ -60,7 +66,7 @@ for i, f in enumerate(fields):
 # In[40]:
 
 i = 0
-p_cursor.skip(47500)
+if SKIP: p_cursor.skip(SKIP)
 for p in p_cursor:
     try:
         if len(p) == 0: print "ERROR, retrieved 0 fields"
@@ -76,6 +82,8 @@ for p in p_cursor:
 	if (i % 2500 == 1): 
 		wb.save(OUT+".xls")
 		print "saved at row %i" %i
+    if i >= MAX:
+        break
     except KeyboardInterrupt:
         print "Interrupted .. last url: " + "http://www.cofounderslab.com"+p['url']
         break
