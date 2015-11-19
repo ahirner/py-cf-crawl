@@ -7,7 +7,7 @@ import pandas as pd
 MONGOPORT = 27017 #3001
 OUT = "out"
 if len(sys.argv) > 1: OUT = sys.argv[1]
-
+LIMIT = 999
 
 # In[2]:
 
@@ -190,6 +190,7 @@ profiles = db.cf_profiles
 #profiles.create_index("id", unique=True)
 
 p_cursor = profiles.find({'detail_raw' : {"$exists" : True}})
+if LIMIT: p_cursor = p_cursor.limit(LIMIT)
 print "Processing %i profiles" % p_cursor.count()
 
 def write_results(p_url, upd):
@@ -207,9 +208,10 @@ for p in p_cursor:
         print "(%s) processed for %i fields, mod %i" % ("http://www.cofounderslab.com"+p['url'], len(data), w.modified_count)
         #mini sanity check
         if len(data) == 0: print "ERROR, retrieved 0 fields"
-        del p['detail_raw']
-        data.update(p)
-	full_data.append(p)
+        if len(data) < 128: 
+        	del p['detail_raw']
+        	data.update(p)
+		full_data.append(p)
     except KeyboardInterrupt:
         print "Interrupted .. last url: " + "http://www.cofounderslab.com"+p['url']
         break
