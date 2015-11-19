@@ -4,10 +4,10 @@ from pymongo import MongoClient
 from bs4 import BeautifulSoup, element
 import pandas as pd
 
-MONGOPORT = 3001 #27017 #3001
+MONGOPORT = 27017 #3001
 OUT = "out"
 if len(sys.argv) > 1: OUT = sys.argv[1]
-LIMIT = 999
+LIMIT = 0
 
 # In[2]:
 
@@ -199,20 +199,20 @@ def write_results(p_url, upd):
     result = profiles.update_one({'url': p_url}, data, upsert=False)
     return result
 
-import pandas as pd
-full_data = []
+#import pandas as pd
+#full_data = []
 for p in p_cursor:
     try:
         data = parse_detail(BeautifulSoup(p['detail_raw'], "lxml"))
         w = write_results(p['url'], data)
-	p['name'] = p['name'].strip()
+	#p['name'] = p['name'].strip()
         print "(%s) processed for %i fields, mod %i" % ("http://www.cofounderslab.com"+p['url'], len(data), w.modified_count)
         #mini sanity check
         if len(data) == 0: print "ERROR, retrieved 0 fields"
-        if len(data) < 128: 
-        	del p['detail_raw']
-        	data.update(p)
-		full_data.append(p)
+        #if len(data) < 128: 
+        #	del p['detail_raw']
+        #	data.update(p)
+	#	full_data.append(p)
     except KeyboardInterrupt:
         print "Interrupted .. last url: " + "http://www.cofounderslab.com"+p['url']
         break
@@ -231,7 +231,7 @@ for p in p_cursor:
 
 # In[15]:
 
-df = pd.DataFrame(full_data)
-print "saving "+str(len(df))+" rows to "+OUT
-df.to_excel(OUT+".xls")
-df.to_csv(OUT+".csv", encoding="utf-8")
+#df = pd.DataFrame(full_data)
+#print "saving "+str(len(df))+" rows to "+OUT
+#df.to_excel(OUT+".xls")
+#df.to_csv(OUT+".csv", encoding="utf-8")

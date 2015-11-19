@@ -7,7 +7,7 @@ import sys
 from pymongo import MongoClient
 import xlwt
 
-MONGOPORT = 3001 #27017 #3001
+MONGOPORT = 27017 #3001
 OUT = "out"
 if len(sys.argv) > 1: OUT = sys.argv[1]
 
@@ -60,17 +60,22 @@ for i, f in enumerate(fields):
 # In[40]:
 
 i = 0
+p_cursor.skip(47500)
 for p in p_cursor:
     try:
         if len(p) == 0: print "ERROR, retrieved 0 fields"
         for k,v in p.iteritems():
             if k in fields:
-                print k,v 
+                #print k,v 
                 ind = fields.index(k)
                 s, c = sheet_column(ind)
                 sheets[s].write(i+1, c, v)
-        if (i % 100): print "%i rows written" %i
         i += 1
+	if (i % 100 == 1):
+		print "%i rows written" %i
+	if (i % 2500 == 1): 
+		wb.save(OUT+".xls")
+		print "saved at row %i" %i
     except KeyboardInterrupt:
         print "Interrupted .. last url: " + "http://www.cofounderslab.com"+p['url']
         break
